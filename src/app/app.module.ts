@@ -44,7 +44,7 @@ import { tasks } from './common/task.reducer';
     BrowserAnimationsModule,
     MaterialModule,
     MdNativeDateModule,
-    StoreModule.provideStore({tasks: tasks})
+    StoreModule.provideStore({ tasks: tasks })
   ],
   providers: [TaskService],
   bootstrap: [AppComponent]
