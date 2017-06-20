@@ -1,6 +1,7 @@
-import { Store } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { Task } from './task';
-import { Action } from '@ngrx/store';
+
+import * as moment from 'moment';
 
 export const tasks = (_tasks: Array<Task> = [], action: Action) => {
   switch (action.type) {
@@ -29,6 +30,11 @@ export const tasks = (_tasks: Array<Task> = [], action: Action) => {
       });
 
     default:
-      return _tasks;
+      return _tasks.map(_task => {
+        _task.assignedOnHumanised = moment(_task.assignedOn, 'YYYY-MM-DD').fromNow();
+        const difference = moment(_task.dueOn, 'YYYY-MM-DD').diff(moment(moment.now()).format('YYYY-MM-DD'));
+        _task.dueOnHumanised = moment.duration(difference).humanize(true);
+        return _task;
+      });
   }
 }

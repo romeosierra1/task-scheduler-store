@@ -8,24 +8,36 @@ import { Store } from '@ngrx/store';
 
 import * as moment from 'moment';
 
-import 'rxjs/add/operator/toPromise';
-
-
 @Injectable()
 export class TaskService {
   store: Store<AppState>;
   id = 0;
-  $tasks: Observable<Task[]>;
-
-  private tasksUrl = 'api/tasks';
-  private headers = new Headers({ 'Content-Type': 'application/json' });
 
   constructor(private http: Http, store: Store<AppState>) {
     this.store = store;
   }
 
   getTasks(): Observable<Task[]> {
-    return this.store.select<Task[]>('tasks');
+    return this.store.select<Task[]>('tasks').map((tasks) => {
+      return tasks.map((task => {
+        task.assignedOnHumanised = moment(task.assignedOn, 'YYYY-MM-DD').fromNow();
+        const difference = moment(task.dueOn, 'YYYY-MM-DD').diff(moment(moment.now()).format('YYYY-MM-DD'));
+        task.dueOnHumanised = moment.duration(difference).humanize(true);
+        return task;
+      }))
+    });
+  }
+
+  getTask(id: number): Observable<Task> {
+    let _task;
+    this.store.select<Task[]>('tasks').forEach((tasks) => {
+      tasks.forEach((task) => {
+        if (task.id === id) {
+          _task = task;
+        }
+      })
+    });
+    return Observable.of(_task);
   }
 
   update(task: Task): void {
@@ -64,17 +76,15 @@ export class TaskService {
     });
   }
 
-  // getPendingTasks(): void {
-  //   return this.getTasks()
-  //     .then(response => {
-  //       return (response.filter((task) => task.finishedOn === ''));
-  //     })
-  // }
+  getPendingTasks(): Observable<Task[]> {
+    return this.store.select<Task[]>('tasks').map((tasks) => {
+      return tasks.filter((task) => task.finishedOn === '');
+    });
+  }
 
-  // getFinishedTasks(): void {
-  //   return this.getTasks()
-  //     .then(response => {
-  //       return (response.filter((task) => task.finishedOn !== ''));
-  //     })
-  // }
+  getFinishedTasks(): Observable<Task[]> {
+    return this.store.select<Task[]>('tasks').map((tasks) => {
+      return tasks.filter((task) => task.finishedOn !== '');
+    });
+  }
 }

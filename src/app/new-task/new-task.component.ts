@@ -11,8 +11,6 @@ import { Task } from 'app/common/task';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewTaskComponent implements OnInit {
-  $notes: Observable<Task[]>
-
   constructor(private taskService: TaskService, private router: Router) { }
 
   add(taskTitle: string, taskDescription: string, assignedTo: string, dueOn: string): void {
@@ -20,6 +18,7 @@ export class NewTaskComponent implements OnInit {
     assignedTo.trim();
     if (!taskTitle && !taskDescription && !assignedTo && !dueOn) { return; }
     this.taskService.create(taskTitle, taskDescription, assignedTo, dueOn);
+    this.router.navigate(['alltasks']);
   }
 
   ngOnInit() {
