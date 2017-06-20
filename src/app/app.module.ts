@@ -22,7 +22,7 @@ import { TaskDetailComponent } from 'app/task-detail/task-detail.component';
 import { DashboardComponent } from 'app/dashboard/dashboard.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { NewTaskComponent } from './new-task/new-task.component';
-import { tasks } from './common/task.reducer';
+import { tasksReducer } from './common/task.reducer';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,7 @@ import { tasks } from './common/task.reducer';
     BrowserAnimationsModule,
     MaterialModule,
     MdNativeDateModule,
-    StoreModule.provideStore({ tasks: tasks }),
+    StoreModule.provideStore({ tasks: tasksReducer }),
   ],
   providers: [TaskService],
   bootstrap: [AppComponent]

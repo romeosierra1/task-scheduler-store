@@ -3,7 +3,7 @@ import { Task } from './task';
 
 import * as moment from 'moment';
 
-export const tasks = ((_tasks: Array<Task> = [], action: Action) => {
+export function tasksReducer(_tasks: Array<Task> = [], action: Action) {
   switch (action.type) {
     case 'CREATE':
       return [
@@ -37,4 +37,4 @@ export const tasks = ((_tasks: Array<Task> = [], action: Action) => {
         return _task;
       });
   }
-});
+};
