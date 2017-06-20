@@ -15,19 +15,16 @@ export class TaskDetailComponent implements OnInit {
   task: Task;
   constructor(private taskService: TaskService, private route: ActivatedRoute, private location: Location) { }
   ngOnInit(): void {
-    this.route.params
-      .switchMap((params: Params) => this.taskService.getTask(+params['id']))
-      .subscribe(task => this.task = task)
+
   }
 
   save(): void {
-    this.taskService.update(this.task)
-      .then(() => this.goBack());
+    this.taskService.update(this.task);
+    this.goBack();
   }
 
   finished(): void {
-    this.taskService.markAsFinished(this.task)
-    .then(() => this.goBack());
+    this.taskService.markAsFinished(this.task);
   }
 
   goBack(): void {

@@ -3,6 +3,7 @@ import { Task } from 'app/common/task';
 import { TaskService } from 'app/common/task.service';
 import { Router } from '@angular/router';
 import { MdDatepickerModule } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'all-tasks',
@@ -10,19 +11,11 @@ import { MdDatepickerModule } from '@angular/material';
   styleUrls: ['./all-tasks.component.css']
 })
 export class AllTasksComponent implements OnInit {
-  tasks: Task[];
-  selectedTask: Task;
-  constructor(private taskService: TaskService, private router: Router) { }
-  onSelect(task: Task): void {
-    this.selectedTask = task;
-  }
+  $tasks: Observable<Task[]>;
 
+  constructor(private taskService: TaskService, private router: Router) { }
   getTasks(): void {
-    this.taskService.getTasks()
-      .then(tasks => {
-        this.tasks = tasks;
-        console.log(this.tasks);
-      });
+    this.$tasks = this.taskService.getTasks();
   }
   gotoDetail(task: Task): void {
     this.router.navigate(['/detail', task.id]);
@@ -30,11 +23,7 @@ export class AllTasksComponent implements OnInit {
 
   delete(task: Task): void {
     this.taskService
-      .delete(task.id)
-      .then(() => {
-        this.tasks = this.tasks.filter(t => t !== task);
-        if (this.selectedTask === task) { this.selectedTask = null }
-      })
+      .delete(task.id);
   }
 
   ngOnInit(): void {

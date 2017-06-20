@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Task } from 'app/common/task';
 import { TaskService } from 'app/common/task.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'my-dashboard',
@@ -11,23 +12,24 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
   pendingTasks: Task[];
   finishedTasks: Task[];
+  $tasks: Observable<Task[]>;
 
   constructor(private taskService: TaskService, private router: Router) { }
 
+  // getTasks(): void {
+  //   this.taskService.getPendingTasks()
+  //     .then(tasks => this.pendingTasks = tasks);
+  //   this.taskService.getFinishedTasks()
+  //     .then(tasks => this.finishedTasks = tasks);
+  // }
+
   getTasks(): void {
-    this.taskService.getPendingTasks()
-      .then(tasks => this.pendingTasks = tasks);
-    this.taskService.getFinishedTasks()
-      .then(tasks => this.finishedTasks = tasks);
+    this.$tasks = this.taskService.getTasks();
   }
 
   delete(task: Task): void {
     this.taskService
-      .delete(task.id)
-      .then(() => {
-        this.pendingTasks = this.pendingTasks.filter(t => t !== task);
-        this.finishedTasks = this.finishedTasks.filter(t => t !== task);
-      })
+      .delete(task.id);
   }
 
   ngOnInit(): void {

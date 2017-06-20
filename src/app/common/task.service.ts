@@ -1,7 +1,10 @@
 import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { Task } from 'app/common/task';
+import { Task, AppState } from 'app/common/task';
 // import { TASKS } from "app/mock-tasks";
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { Store } from '@ngrx/store';
 
 import * as moment from 'moment';
 
@@ -10,49 +13,32 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class TaskService {
+  store: Store<AppState>;
+  id = 0;
+  $tasks: Observable<Task[]>;
 
   private tasksUrl = 'api/tasks';
   private headers = new Headers({ 'Content-Type': 'application/json' });
 
-  constructor(private http: Http) { }
-
-  getTasks(): Promise<Task[]> {
-    return this.http.get(this.tasksUrl)
-      .toPromise()
-      .then((response) => {
-        (response.json().data as Task[]).forEach((task) => {
-          task.assignedOnHumanised = moment(task.assignedOn, 'YYYY-MM-DD').fromNow();
-          const difference = moment(task.dueOn, 'YYYY-MM-DD').diff(moment(moment.now()).format('YYYY-MM-DD'));
-          task.dueOnHumanised = moment.duration(difference).humanize(true);
-        });
-        return response.json().data;
-      })
-      .catch(this.handleError);
+  constructor(private http: Http, store: Store<AppState>) {
+    this.store = store;
   }
 
-  getTask(id: number): Promise<Task> {
-    const url = `${this.tasksUrl}/${id}`;
-    return this.http.get(url)
-      .toPromise()
-      .then(response => response.json().data as Task)
-      .catch(this.handleError)
+  getTasks(): Observable<Task[]> {
+    return this.store.select<Task[]>('tasks');
   }
 
-  update(task: Task): Promise<Task> {
-    const url = `${this.tasksUrl}/${task.id}`;
-
+  update(task: Task): void {
     task.dueOn = moment(task.dueOn).format('YYYY-MM-DD');
-
-    return this.http.
-      put(url, JSON.stringify(task), { headers: this.headers })
-      .toPromise()
-      .then(() => task)
-      .catch(this.handleError)
+    this.store.dispatch({
+      type: 'UPDATE', payload: task
+    });
   }
 
-  create(taskTitle: string, taskDescription: string, assignedTo: string, dueOn: string): Promise<Task> {
-    return this.http
-      .post(this.tasksUrl, JSON.stringify({
+  create(taskTitle: string, taskDescription: string, assignedTo: string, dueOn: string): void {
+    this.store.dispatch({
+      type: 'CREATE', payload: {
+        id: ++this.id,
         taskTitle: taskTitle,
         taskDescription: taskDescription,
         assignedTo: assignedTo,
@@ -61,47 +47,34 @@ export class TaskService {
         finishedOn: '',
         assignedOnHumanised: '',
         dueOnHumanised: ''
-      }), { headers: this.headers })
-      .toPromise()
-      .then(response => response.json().data as Task)
-      .catch(this.handleError)
+      }
+    });
   }
 
-  delete(id: number): Promise<void> {
-    const url = `${this.tasksUrl}/${id}`;
-    return this.http.delete(url, { headers: this.headers })
-      .toPromise()
-      .then(() => null)
-      .catch(this.handleError);
+  delete(id: number): void {
+    this.store.dispatch({
+      type: 'DELETE', payload: id
+    });
   }
 
-  markAsFinished(task: Task): Promise<Task> {
-    const url = `${this.tasksUrl}/${task.id}`;
+  markAsFinished(task: Task): void {
     task.finishedOn = moment(moment.now()).format('YYYY-MM-DD');
-    return this.http.put(url, JSON.stringify(task), { headers: this.headers })
-      .toPromise()
-      .then(() => task)
-      .catch(this.handleError);
+    this.store.dispatch({
+      type: 'MARK_AS_FINISHED', payload: task
+    });
   }
 
-  getPendingTasks(): Promise<Task[]> {
-    return this.getTasks()
-      .then(response => {
-        return (response.filter((task) => task.finishedOn === ''));
-      })
-      .catch(this.handleError);
-  }
+  // getPendingTasks(): void {
+  //   return this.getTasks()
+  //     .then(response => {
+  //       return (response.filter((task) => task.finishedOn === ''));
+  //     })
+  // }
 
-  getFinishedTasks(): Promise<Task[]> {
-    return this.getTasks()
-      .then(response => {
-        return (response.filter((task) => task.finishedOn !== ''));
-      })
-      .catch(this.handleError);
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
-  }
+  // getFinishedTasks(): void {
+  //   return this.getTasks()
+  //     .then(response => {
+  //       return (response.filter((task) => task.finishedOn !== ''));
+  //     })
+  // }
 }

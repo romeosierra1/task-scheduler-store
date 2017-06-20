@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="center">
   <div fxLayout="column">
     <h3>All Tasks</h3>
-    <md-card *ngFor="let task of tasks">
+    <md-card *ngFor="let task of $tasks | async">
       <md-card-header>
         <md-card-title>Task: {{task.taskTitle}}</md-card-title>
         <md-card-subtitle>Assigned To: {{task.assignedTo}}</md-card-subtitle>

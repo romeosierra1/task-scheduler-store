@@ -1,9 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { FlexLayoutModule} from '@angular/flex-layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpModule } from '@angular/http';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from 'app/app-routing.module';
 
@@ -20,7 +22,7 @@ import { TaskDetailComponent } from 'app/task-detail/task-detail.component';
 import { DashboardComponent } from 'app/dashboard/dashboard.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { NewTaskComponent } from './new-task/new-task.component';
-
+import { tasks } from './common/task.reducer';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,7 @@ import { NewTaskComponent } from './new-task/new-task.component';
     AllTasksComponent,
     ToolbarComponent,
     NewTaskComponent
-],
+  ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -41,10 +43,11 @@ import { NewTaskComponent } from './new-task/new-task.component';
     InMemoryWebApiModule.forRoot(InMemoryDataService),
     BrowserAnimationsModule,
     MaterialModule,
-    MdNativeDateModule
+    MdNativeDateModule,
+    StoreModule.provideStore(tasks)
   ],
   providers: [TaskService],
-  bootstrap: [AppComponent]
+  bootstrap : [AppComponent]
 })
 export class AppModule { }
 

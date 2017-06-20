@@ -1,23 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { TaskService } from 'app/common/task.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { Task } from 'app/common/task';
 
 @Component({
   selector: 'app-new-task',
   templateUrl: './new-task.component.html',
-  styleUrls: ['./new-task.component.css']
+  styleUrls: ['./new-task.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewTaskComponent implements OnInit {
+  $notes: Observable<Task[]>
 
-  constructor(private taskService: TaskService, private router:Router) { }
+  constructor(private taskService: TaskService, private router: Router) { }
 
   add(taskTitle: string, taskDescription: string, assignedTo: string, dueOn: string): void {
     taskTitle.trim();
     assignedTo.trim();
     if (!taskTitle && !taskDescription && !assignedTo && !dueOn) { return; }
-    this.taskService.create(taskTitle, taskDescription, assignedTo, dueOn)
-      .then(() => this.router.navigate(['/alltasks']))
-      .catch();
+    this.taskService.create(taskTitle, taskDescription, assignedTo, dueOn);
   }
 
   ngOnInit() {

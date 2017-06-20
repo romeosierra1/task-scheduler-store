@@ -1,4 +1,4 @@
-export class Task {
+export interface Task {
   id: number;
   taskTitle: string;
   taskDescription: string;
@@ -6,6 +6,10 @@ export class Task {
   assignedOn: string;
   dueOn: string;
   finishedOn: string;
-  assignedOnHumanised: string ;
-  dueOnHumanised: string ;
+  assignedOnHumanised: string;
+  dueOnHumanised: string;
+}
+
+export interface AppState {
+  tasks: Task[];
 }
