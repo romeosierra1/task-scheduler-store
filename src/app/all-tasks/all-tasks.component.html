@@ -1,0 +1,26 @@
+<div fxLayout="row" fxLayoutAlign="center">
+  <div fxLayout="column">
+    <h3>All Tasks</h3>
+    <md-card *ngFor="let task of tasks">
+      <md-card-header>
+        <md-card-title>Task: {{task.taskTitle}}</md-card-title>
+        <md-card-subtitle>Assigned To: {{task.assignedTo}}</md-card-subtitle>
+      </md-card-header>
+
+      <md-card-content>
+        <p>{{task.taskDescription}}</p>
+        <p> Assigned On : {{task.assignedOn}} ({{task.assignedOnHumanised}}) <br> Due On : {{task.dueOn}} ({{task.dueOnHumanised}})</p>
+        <p *ngIf="task.finishedOn">
+          Finished On : {{task.finishedOn}}
+        </p>
+      </md-card-content>
+      <md-card-actions align="start|end">
+        <button md-raised-button color="primary" (click)="gotoDetail(task)">View Details</button>
+        <button md-raised-button color="accent" (click)="delete(task)">Delete</button>
+      </md-card-actions>
+      <md-card-footer>
+
+      </md-card-footer>
+    </md-card>
+  </div>
+</div>

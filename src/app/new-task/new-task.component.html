@@ -1,0 +1,27 @@
+<div fxLayout="row" fxLayoutAlign="center">
+  <div fxLayout="column">
+    <h3>New Task</h3>
+    <md-input-container>
+      <input #taskTitle mdInput placeholder="Title" value="" />
+    </md-input-container>
+    <br>
+    <md-input-container>
+      <input #taskDescription mdInput placeholder="Description" value="" />
+    </md-input-container>
+    <br>
+    <md-input-container>
+      <input #assignedTo mdInput placeholder="Assign To" value="" />
+    </md-input-container>
+    <br>
+    <md-input-container>
+      <input #dueOn mdInput [mdDatepicker]="picker" placeholder="Due On">
+      <button mdSuffix [mdDatepickerToggle]="picker"></button>
+      <md-datepicker #picker></md-datepicker>
+    </md-input-container>
+
+    <br>
+    <button md-raised-button color="primary" (click)="add(taskTitle.value,taskDescription.value, assignedTo.value, dueOn.value); taskTitle.value=''; taskDescription.value=''; assignedTo.value=''; dueOn.value=''">
+    Add
+  </button>
+  </div>
+</div>
