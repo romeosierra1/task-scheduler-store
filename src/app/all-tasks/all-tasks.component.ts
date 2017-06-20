@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from 'app/task';
-import { TaskService } from 'app/task.service';
+import { Task } from 'app/common/task';
+import { TaskService } from 'app/common/task.service';
 import { Router } from '@angular/router';
 import { MdDatepickerModule } from '@angular/material';
 

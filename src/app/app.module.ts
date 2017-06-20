@@ -8,10 +8,10 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppRoutingModule } from 'app/app-routing.module';
 
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
+import { InMemoryDataService } from './common/in-memory-data.service';
 
 import { AppComponent } from './app.component';
-import { TaskService } from 'app/task.service';
+import { TaskService } from 'app/common/task.service';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule, MdNativeDateModule } from '@angular/material';

@@ -1,6 +1,6 @@
 import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { Task } from 'app/task';
+import { Task } from 'app/common/task';
 // import { TASKS } from "app/mock-tasks";
 
 import * as moment from 'moment';
