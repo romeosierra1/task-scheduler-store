@@ -55,7 +55,7 @@ export class TaskService {
         taskDescription: taskDescription,
         assignedTo: assignedTo,
         assignedOn: moment(moment.now()).format('YYYY-MM-DD'),
-        dueOn: moment(dueOn, 'M/D/YYYY').format('YYYY-MM-DD'),
+        dueOn: moment(dueOn).format('YYYY-MM-DD'),
         finishedOn: '',
         assignedOnHumanised: '',
         dueOnHumanised: ''
