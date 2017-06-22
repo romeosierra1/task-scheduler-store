@@ -90,7 +90,7 @@ export class TaskService {
 
   getSearchedTasks(query: string): Observable<Task[]> {
     return this.store.select<Task[]>('tasks').map((tasks) => {
-      return tasks.filter((task) => task.taskTitle.startsWith(query));
+      return tasks.filter((task) => task.taskTitle.toLowerCase().startsWith(query));
     })
   }
 }
