@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Task } from 'app/common/task';
-import { TaskService } from 'app/common/task.service';
+import { Task } from 'app/models/task';
+import { TaskService } from 'app/services/task.service';
 import 'rxjs/add/operator/switchMap'
 
 @Component({

@@ -1,5 +1,5 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { Task } from 'app/common/task';
+import { Task } from 'app/models/task';
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     let tasks: Task[] = [

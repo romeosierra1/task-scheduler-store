@@ -1,5 +1,5 @@
 import { Action, Store } from '@ngrx/store';
-import { Task } from './task';
+import { Task } from 'app/models/task';
 
 import * as moment from 'moment';
 

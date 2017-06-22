@@ -19,7 +19,7 @@
 
       </md-card-footer>
     </md-card>
-
+    <div *ngIf="(pendingTasks$ | async)?.length==0">No Pending Tasks.</div>
     <h3>Finished Tasks</h3>
     <md-card *ngFor="let task of finishedTasks$ | async">
       <md-card-header>
@@ -39,5 +39,6 @@
 
       </md-card-footer>
     </md-card>
+    <div *ngIf="(finishedTasks$ | async)?.length==0">No Finished Tasks.</div>
   </div>
 </div>

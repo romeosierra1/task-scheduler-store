@@ -1,10 +1,10 @@
 import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { Task, AppState } from 'app/common/task';
+import { Task, AppState } from 'app/models/task';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
-import { CREATE_TASK, UPDATE_TASK, DELETE_TASK, MARK_TASK_AS_FINISHED } from './task.reducer';
+import { CREATE_TASK, UPDATE_TASK, DELETE_TASK, MARK_TASK_AS_FINISHED } from 'app/reducers/task.reducer';
 
 import * as moment from 'moment';
 

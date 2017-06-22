@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { TaskService } from 'app/common/task.service';
+import { TaskService } from 'app/services/task.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { Task } from 'app/common/task';
+import { Task } from 'app/models/task';
 
 @Component({
   selector: 'app-new-task',
