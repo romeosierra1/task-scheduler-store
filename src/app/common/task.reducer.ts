@@ -3,23 +3,28 @@ import { Task } from './task';
 
 import * as moment from 'moment';
 
+export const CREATE_TASK = '[Task] Create a new Task';
+export const UPDATE_TASK = '[Task] Update a Task';
+export const DELETE_TASK = '[Task] Delete a task';
+export const MARK_TASK_AS_FINISHED = '[Task] Mark a task as finished';
+
 export function tasksReducer(_tasks: Array<Task> = [], action: Action) {
   switch (action.type) {
-    case 'CREATE':
+    case CREATE_TASK:
       return [
         ..._tasks,
         action.payload
       ];
-    case 'UPDATE':
+    case UPDATE_TASK:
       return _tasks.map(_task => {
         if (_task.id === action.payload.id) {
           return Object.assign({}, _task, action.payload);
         }
         return _task;
       });
-    case 'DELETE':
+    case DELETE_TASK:
       return _tasks.filter(_task => _task.id !== action.payload);
-    case 'MARK_AS_FINISHED':
+    case MARK_TASK_AS_FINISHED:
       return _tasks.map(_task => {
         if (_task.id === action.payload.id) {
           return Object.assign({}, _task, {

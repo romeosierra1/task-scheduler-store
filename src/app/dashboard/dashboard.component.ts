@@ -10,14 +10,14 @@ import { Observable } from 'rxjs/Observable';
 })
 
 export class DashboardComponent implements OnInit {
-  $pendingTasks: Observable<Task[]>;
-  $finishedTasks: Observable<Task[]>;
+  pendingTasks$: Observable<Task[]>;
+  finishedTasks$: Observable<Task[]>;
 
   constructor(private taskService: TaskService, private router: Router) { }
 
   getTasks(): void {
-    this.$pendingTasks = this.taskService.getPendingTasks();
-    this.$finishedTasks = this.taskService.getFinishedTasks();
+    this.pendingTasks$ = this.taskService.getPendingTasks();
+    this.finishedTasks$ = this.taskService.getFinishedTasks();
   }
 
   delete(task: Task): void {

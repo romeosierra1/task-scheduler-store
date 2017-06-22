@@ -1,10 +1,10 @@
 import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Task, AppState } from 'app/common/task';
-// import { TASKS } from "app/mock-tasks";
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
+import { CREATE_TASK, UPDATE_TASK, DELETE_TASK, MARK_TASK_AS_FINISHED } from './task.reducer';
 
 import * as moment from 'moment';
 
@@ -43,13 +43,13 @@ export class TaskService {
   update(task: Task): void {
     task.dueOn = moment(task.dueOn).format('YYYY-MM-DD');
     this.store.dispatch({
-      type: 'UPDATE', payload: task
+      type: UPDATE_TASK, payload: task
     });
   }
 
   create(taskTitle: string, taskDescription: string, assignedTo: string, dueOn: string): void {
     this.store.dispatch({
-      type: 'CREATE', payload: {
+      type: CREATE_TASK, payload: {
         id: ++this.id,
         taskTitle: taskTitle,
         taskDescription: taskDescription,
@@ -65,14 +65,14 @@ export class TaskService {
 
   delete(id: number): void {
     this.store.dispatch({
-      type: 'DELETE', payload: id
+      type: DELETE_TASK, payload: id
     });
   }
 
   markAsFinished(task: Task): void {
     task.finishedOn = moment(moment.now()).format('YYYY-MM-DD');
     this.store.dispatch({
-      type: 'MARK_AS_FINISHED', payload: task
+      type: MARK_TASK_AS_FINISHED, payload: task
     });
   }
 
