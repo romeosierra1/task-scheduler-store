@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DashboardComponent } from 'app/components/dashboard/dashboard.component';
 import { AllTasksComponent } from 'app/components/all-tasks/all-tasks.component';
-import { TaskDetailComponent } from 'app/components/task-detail/task-detail.component';
+import { DashboardComponent } from 'app/components/dashboard/dashboard.component';
 import { NewTaskComponent } from 'app/components/new-task/new-task.component';
+import { SearchTasksComponent } from 'app/components/search-tasks/search-tasks.component';
+import { TaskDetailComponent } from 'app/components/task-detail/task-detail.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'task',
     component: NewTaskComponent
+  },
+  {
+    path: 'search',
+    component: SearchTasksComponent
   }
 ];
 

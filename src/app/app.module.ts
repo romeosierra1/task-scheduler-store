@@ -1,7 +1,7 @@
 import { AppRoutingModule } from 'app/app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpModule } from '@angular/http';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { AllTasksComponent } from 'app/components/all-tasks/all-tasks.component';
 import { DashboardComponent } from 'app/components/dashboard/dashboard.component';
 import { NewTaskComponent } from 'app/components/new-task/new-task.component';
+import { SearchTasksComponent } from 'app/components/search-tasks/search-tasks.component';
 import { TaskDetailComponent } from 'app/components/task-detail/task-detail.component';
 import { ToolbarComponent } from 'app/components/toolbar/toolbar.component';
 
@@ -26,12 +27,12 @@ import { tasksReducer } from 'app/reducers/task.reducer';
 @NgModule({
   declarations: [
     AppComponent,
-    TaskDetailComponent,
     AllTasksComponent,
     DashboardComponent,
-    AllTasksComponent,
+    NewTaskComponent,
+    SearchTasksComponent,
+    TaskDetailComponent,
     ToolbarComponent,
-    NewTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +44,7 @@ import { tasksReducer } from 'app/reducers/task.reducer';
     BrowserAnimationsModule,
     MaterialModule,
     MdNativeDateModule,
+    ReactiveFormsModule,
     StoreModule.provideStore({ tasks: tasksReducer }),
   ],
   providers: [TaskService],
