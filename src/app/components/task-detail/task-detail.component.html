@@ -3,6 +3,12 @@
     <div *ngIf="task">
       <h2>Task Detail</h2>
       <md-input-container>
+        <input [(ngModel)]="task.dueOn" mdInput [mdDatepicker]="picker" placeholder="Due On">
+        <button mdSuffix [mdDatepickerToggle]="picker"></button>
+        <md-datepicker #picker></md-datepicker>
+      </md-input-container>
+      <br>
+      <md-input-container>
         <input [(ngModel)]="task.taskTitle" mdInput placeholder="Title" value="" />
       </md-input-container>
       <br>
@@ -13,13 +19,6 @@
       <md-input-container>
         <input [(ngModel)]="task.assignedTo" mdInput placeholder="Assign To" value="" />
       </md-input-container>
-      <br>
-      <md-input-container>
-        <input [(ngModel)]="task.dueOn" mdInput [mdDatepicker]="picker" placeholder="Due On">
-        <button mdSuffix [mdDatepickerToggle]="picker"></button>
-        <md-datepicker #picker></md-datepicker>
-      </md-input-container>
-
       <br>
       <button md-raised-button (click)="goBack()">Back</button>
       <button md-raised-button color="primary" (click)="save()">Save</button>

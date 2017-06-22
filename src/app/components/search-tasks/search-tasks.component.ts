@@ -20,10 +20,6 @@ export class SearchTasksComponent implements OnInit {
 
   constructor(private taskService: TaskService, private router: Router) { }
 
-  getSearchedTasks(query: string): void {
-      // .subscribe((tasks) => console.log(tasks));
-  }
-
   delete(task: Task): void {
     this.taskService.delete(task.id);
   }
