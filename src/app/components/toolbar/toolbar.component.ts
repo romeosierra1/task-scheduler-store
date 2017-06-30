@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TaskService } from 'app/services/task.service';
 
 @Component({
   selector: 'app-toolbar',

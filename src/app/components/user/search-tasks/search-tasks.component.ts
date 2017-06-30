@@ -28,6 +28,7 @@ export class SearchTasksComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.taskService.authenticate();
     this.search = new FormControl();
     this.searchedTasks$ = this.search.valueChanges
       .debounceTime(500)

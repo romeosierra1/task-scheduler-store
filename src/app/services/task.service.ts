@@ -7,22 +7,25 @@ import { Store } from '@ngrx/store';
 import { CREATE_TASK, UPDATE_TASK, DELETE_TASK, MARK_TASK_AS_FINISHED } from 'app/reducers/task.reducer';
 
 import * as moment from 'moment';
+import { Router } from '@angular/router';
+import { UserService } from 'app/services/user.service';
 
 @Injectable()
 export class TaskService {
   store: Store<AppState>;
-  id = 0;
-
   apiUrl = 'https://taskschedulerbackend.herokuapp.com';
 
   private headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
 
-  constructor(private http: Http, store: Store<AppState>) {
+  constructor(private http: Http,
+    store: Store<AppState>,
+    private router: Router,
+    private userService: UserService) {
     this.store = store;
   }
 
   initTasks(): void {
-    this.http.get(`${this.apiUrl}/tasks`)
+    this.http.get(`${this.apiUrl}/tasks/${this.userService.id}`)
       .subscribe(response => {
         const tasks = response.json() as Task[];
         tasks.forEach(task => {
@@ -74,6 +77,7 @@ export class TaskService {
       JSON.stringify({
         taskTitle: taskTitle,
         taskDescription: taskDescription,
+        assignedBy: this.userService.id,
         assignedTo: assignedTo,
         assignedOn: moment(moment.now()).format('YYYY-MM-DD'),
         dueOn: moment(dueOn, ['DD-MM-YYYY', 'MM-DD-YYYY', 'YYYY-MM-DD', 'ddd DD MMM YYYY', 'ddd MMM DD YYYY']).format('YYYY-MM-DD'),
@@ -130,5 +134,10 @@ export class TaskService {
     return this.store.select<Task[]>('tasks').map((tasks) => {
       return tasks.filter((task) => task.taskTitle.toLowerCase().startsWith(query.toLowerCase()));
     })
+  }
+  authenticate(): void {
+    if (this.userService.id === '') {
+      this.router.navigate(['login']);
+    }
   }
 }

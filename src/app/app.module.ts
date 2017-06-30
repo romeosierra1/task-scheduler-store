@@ -10,14 +10,19 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { StoreModule } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
-import { AllTasksComponent } from 'app/components/all-tasks/all-tasks.component';
-import { DashboardComponent } from 'app/components/dashboard/dashboard.component';
-import { NewTaskComponent } from 'app/components/new-task/new-task.component';
-import { SearchTasksComponent } from 'app/components/search-tasks/search-tasks.component';
-import { TaskDetailComponent } from 'app/components/task-detail/task-detail.component';
+import { AllTasksComponent } from 'app/components/user/all-tasks/all-tasks.component';
+import { DashboardComponent } from 'app/components/user/dashboard/dashboard.component';
+import { NewTaskComponent } from 'app/components/user/new-task/new-task.component';
+import { SearchTasksComponent } from 'app/components/user/search-tasks/search-tasks.component';
+import { TaskDetailComponent } from 'app/components/user/task-detail/task-detail.component';
 import { ToolbarComponent } from 'app/components/toolbar/toolbar.component';
+import { LoginComponent } from 'app/components/public/login/login.component';
+import { SignupComponent } from 'app/components/public/signup/signup.component';
+import { PublicComponent } from 'app/components/public/public.component';
+import { UserComponent } from 'app/components/user/user.component';
 
 import { TaskService } from 'app/services/task.service';
+import { UserService } from 'app/services/user.service';
 
 import { tasksReducer } from 'app/reducers/task.reducer';
 
@@ -31,6 +36,10 @@ import { tasksReducer } from 'app/reducers/task.reducer';
     SearchTasksComponent,
     TaskDetailComponent,
     ToolbarComponent,
+    LoginComponent,
+    SignupComponent,
+    PublicComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +53,7 @@ import { tasksReducer } from 'app/reducers/task.reducer';
     ReactiveFormsModule,
     StoreModule.provideStore({ tasks: tasksReducer }),
   ],
-  providers: [TaskService],
+  providers: [TaskService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

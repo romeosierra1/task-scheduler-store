@@ -16,6 +16,7 @@ export class DashboardComponent implements OnInit {
   constructor(private taskService: TaskService, private router: Router) { }
 
   getTasks(): void {
+    this.taskService.initTasks();
     this.pendingTasks$ = this.taskService.getPendingTasks();
     this.finishedTasks$ = this.taskService.getFinishedTasks();
   }
@@ -26,6 +27,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.taskService.authenticate();
     this.getTasks();
   }
 

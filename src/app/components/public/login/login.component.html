@@ -1,0 +1,17 @@
+<app-public></app-public>
+<div fxLayout="row" fxLayoutAlign="center">
+  <div fxLayout="column">
+    <h3>Login</h3>
+    <md-input-container>
+      <input #username mdInput placeholder="Username" value="" />
+    </md-input-container>
+    <br>
+    <md-input-container>
+      <input #password mdInput placeholder="Password" type="password" value="" />
+    </md-input-container>
+    <br>
+    <button md-raised-button color="primary" (click)="login(username.value, password.value); username.value=''; password.value=''">
+    Login
+  </button>
+  </div>
+</div>

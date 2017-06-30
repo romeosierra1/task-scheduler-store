@@ -27,6 +27,7 @@ export class AllTasksComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.taskService.authenticate();
     this.getTasks();
   }
 }

@@ -1,0 +1,21 @@
+<app-public></app-public>
+<div fxLayout="row" fxLayoutAlign="center">
+  <div fxLayout="column">
+    <h3>Sign Up</h3>
+    <md-input-container>
+      <input #username mdInput placeholder="Username" value="" />
+    </md-input-container>
+    <br>
+    <md-input-container>
+      <input #password mdInput placeholder="Password" type="password" value="" />
+    </md-input-container>
+    <br>
+    <md-input-container>
+      <input #confirmpassword mdInput placeholder="Confirm Password" type="password" value="" />
+    </md-input-container>
+    <br>
+    <button md-raised-button color="primary" (click)="signup(username.value, password.value, confirmpassword.value); username.value=''; password.value=''; confirmpassword.value=''">
+    Sign Up
+  </button>
+  </div>
+</div>

@@ -22,6 +22,7 @@ export class NewTaskComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.taskService.authenticate();
   }
 
 }
