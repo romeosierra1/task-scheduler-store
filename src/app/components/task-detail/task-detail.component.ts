@@ -16,7 +16,7 @@ export class TaskDetailComponent implements OnInit {
   constructor(private taskService: TaskService, private route: ActivatedRoute, private location: Location) { }
   ngOnInit(): void {
      this.route.params
-      .switchMap((params: Params) => this.taskService.getTask(+params['id']))
+      .switchMap((params: Params) => this.taskService.getTask(params['id'] + ''))
       .subscribe(task => this.task = task);
   }
 

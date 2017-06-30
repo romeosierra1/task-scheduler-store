@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpModule } from '@angular/http';
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { MaterialModule, MdNativeDateModule } from '@angular/material';
 import { NgModule } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -18,7 +17,6 @@ import { SearchTasksComponent } from 'app/components/search-tasks/search-tasks.c
 import { TaskDetailComponent } from 'app/components/task-detail/task-detail.component';
 import { ToolbarComponent } from 'app/components/toolbar/toolbar.component';
 
-import { InMemoryDataService } from 'app/services/in-memory-data.service';
 import { TaskService } from 'app/services/task.service';
 
 import { tasksReducer } from 'app/reducers/task.reducer';
@@ -40,7 +38,6 @@ import { tasksReducer } from 'app/reducers/task.reducer';
     FlexLayoutModule,
     AppRoutingModule,
     HttpModule,
-    InMemoryWebApiModule.forRoot(InMemoryDataService),
     BrowserAnimationsModule,
     MaterialModule,
     MdNativeDateModule,

@@ -13,8 +13,25 @@ export class TaskService {
   store: Store<AppState>;
   id = 0;
 
+  apiUrl = 'https://taskschedulerbackend.herokuapp.com';
+
+  private headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+
   constructor(private http: Http, store: Store<AppState>) {
     this.store = store;
+  }
+
+  initTasks(): void {
+    this.http.get(`${this.apiUrl}/tasks`)
+      .subscribe(response => {
+        const tasks = response.json() as Task[];
+        tasks.forEach(task => {
+          this.store.dispatch({
+            type: CREATE_TASK,
+            payload: task
+          });
+        })
+      });
   }
 
   getTasks(): Observable<Task[]> {
@@ -28,7 +45,7 @@ export class TaskService {
     });
   }
 
-  getTask(id: number): Observable<Task> {
+  getTask(id: string): Observable<Task> {
     let _task;
     this.store.select<Task[]>('tasks').forEach((tasks) => {
       tasks.forEach((task) => {
@@ -42,15 +59,19 @@ export class TaskService {
 
   update(task: Task): void {
     task.dueOn = moment(task.dueOn).format('YYYY-MM-DD');
-    this.store.dispatch({
-      type: UPDATE_TASK, payload: task
-    });
+    this.http.put(`${this.apiUrl}/tasks/${task.id}`, JSON.stringify(task))
+      .subscribe(response => {
+        if (response.status === 200) {
+          this.store.dispatch({
+            type: UPDATE_TASK, payload: task
+          });
+        }
+      });
   }
 
   create(taskTitle: string, taskDescription: string, assignedTo: string, dueOn: string): void {
-    this.store.dispatch({
-      type: CREATE_TASK, payload: {
-        id: ++this.id,
+    this.http.post(`${this.apiUrl}/task`,
+      JSON.stringify({
         taskTitle: taskTitle,
         taskDescription: taskDescription,
         assignedTo: assignedTo,
@@ -59,21 +80,38 @@ export class TaskService {
         finishedOn: '',
         assignedOnHumanised: '',
         dueOnHumanised: ''
-      }
-    });
+      }), /*{ headers: this.headers }*/)
+      .subscribe(response => {
+        if (response.status === 200) {
+          this.store.dispatch({
+            type: CREATE_TASK,
+            payload: response.json()
+          });
+        }
+      });
   }
 
-  delete(id: number): void {
-    this.store.dispatch({
-      type: DELETE_TASK, payload: id
-    });
+  delete(id: string): void {
+    this.http.delete(`${this.apiUrl}/tasks/${id}`)
+      .subscribe(response => {
+        if (response.status === 200) {
+          this.store.dispatch({
+            type: DELETE_TASK, payload: id
+          });
+        }
+      });
   }
 
   markAsFinished(task: Task): void {
     task.finishedOn = moment(moment.now()).format('YYYY-MM-DD');
-    this.store.dispatch({
-      type: MARK_TASK_AS_FINISHED, payload: task
-    });
+    this.http.put(`${this.apiUrl}/tasks/${task.id}`, JSON.stringify(task))
+      .subscribe(response => {
+        if (response.status === 200) {
+          this.store.dispatch({
+            type: MARK_TASK_AS_FINISHED, payload: task
+          });
+        }
+      });
   }
 
   getPendingTasks(): Observable<Task[]> {
